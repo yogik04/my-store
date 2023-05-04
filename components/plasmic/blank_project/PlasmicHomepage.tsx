@@ -199,24 +199,7 @@ function PlasmicHomepage__RenderFunc(props: {
                 sty.text
               )}
             >
-              <React.Fragment>
-                <React.Fragment>
-                  {
-                    "If you haven't already done so, go back and learn the basics by going through the Plasmic Levels tutorial.\n\nIt's always easier to start from examples! Add a new page using a template—do this from the list of pages in the top toolbar.\n\nOr press the big blue + button to start inserting items into this page.\n\nIntegrate this project into your codebase—press the "
-                  }
-                </React.Fragment>
-                <span
-                  className={"plasmic_default__all plasmic_default__span"}
-                  style={{ fontWeight: 700 }}
-                >
-                  {"Code"}
-                </span>
-                <React.Fragment>
-                  {
-                    " button in the top right and follow the quickstart instructions.\n\nJoin our Slack community (icon in bottom left) for help any time."
-                  }
-                </React.Fragment>
-              </React.Fragment>
+              {"WELCOME TO MY STORE"}
             </div>
           </section>
           <ProductCollection
