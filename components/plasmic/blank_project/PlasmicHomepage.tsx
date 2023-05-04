@@ -39,10 +39,8 @@ import {
 import { ProductCollection } from "@plasmicpkgs/commerce"; // plasmic-import: vU2jzVAnFP/codeComponent
 import { ProductMedia } from "@plasmicpkgs/commerce"; // plasmic-import: qpULM0wwWW/codeComponent
 import { ProductTextField } from "@plasmicpkgs/commerce"; // plasmic-import: S1F4q0wN6b/codeComponent
-import { ProductSlider } from "@plasmicpkgs/commerce"; // plasmic-import: 5k_ZYl4EkcYi/codeComponent
-import { ProductQuantity } from "@plasmicpkgs/commerce"; // plasmic-import: CjfQQrwiHjD/codeComponent
 import { ProductPriceComponent } from "@plasmicpkgs/commerce"; // plasmic-import: _PaJxGc8gf/codeComponent
-import { AddToCartButton } from "@plasmicpkgs/commerce"; // plasmic-import: NR7KYUJmEqx/codeComponent
+import { PlasmicHead } from "@plasmicapp/react-web"; // plasmic-import: fvHa-8fU0wM2N/codeComponent
 
 import "@plasmicapp/react-web/lib/plasmic.css";
 
@@ -64,13 +62,11 @@ export type PlasmicHomepage__OverridesType = {
   h1?: p.Flex<"h1">;
   text?: p.Flex<"div">;
   productCollection?: p.Flex<typeof ProductCollection>;
-  freeBox?: p.Flex<"div">;
+  link?: p.Flex<"a"> & Partial<LinkProps>;
   productMedia?: p.Flex<typeof ProductMedia>;
   productTextField?: p.Flex<typeof ProductTextField>;
-  productSlider?: p.Flex<typeof ProductSlider>;
-  productQuantity?: p.Flex<typeof ProductQuantity>;
   productPrice?: p.Flex<typeof ProductPriceComponent>;
-  addToCartButton?: p.Flex<typeof AddToCartButton>;
+  head?: p.Flex<typeof PlasmicHead>;
 };
 
 export interface DefaultHomepageProps {}
@@ -110,30 +106,6 @@ function PlasmicHomepage__RenderFunc(props: {
 
   const currentUser = p.useCurrentUser?.() || {};
   const [$queries, setDollarQueries] = React.useState({});
-  const stateSpecs = React.useMemo(
-    () => [
-      {
-        path: "textbox.value",
-        type: "private",
-        variableType: "text",
-        initFunc: ({ $props, $state, $queries, $ctx }) => "1" as const
-      },
-      {
-        path: "textbox.value",
-        type: "private",
-        variableType: "text",
-        initFunc: ({ $props, $state, $queries, $ctx }) => "1" as const
-      },
-      {
-        path: "textbox.value",
-        type: "private",
-        variableType: "text",
-        initFunc: ({ $props, $state, $queries, $ctx }) => "1" as const
-      }
-    ],
-    [$props, $ctx]
-  );
-  const $state = p.useDollarState(stateSpecs, { $props, $ctx, $queries });
 
   return (
     <React.Fragment>
@@ -213,7 +185,7 @@ function PlasmicHomepage__RenderFunc(props: {
                     className={classNames(
                       projectcss.all,
                       projectcss.__wab_text,
-                      sty.text__eFy2O
+                      sty.text__uKcT
                     )}
                   >
                     {"No product found!"}
@@ -228,7 +200,7 @@ function PlasmicHomepage__RenderFunc(props: {
                     className={classNames(
                       projectcss.all,
                       projectcss.__wab_text,
-                      sty.text__sc0Q0
+                      sty.text__z4IkP
                     )}
                   >
                     {"Loading..."}
@@ -239,10 +211,32 @@ function PlasmicHomepage__RenderFunc(props: {
           >
             <ph.DataCtxReader>
               {$ctx => (
-                <div
-                  data-plasmic-name={"freeBox"}
-                  data-plasmic-override={overrides.freeBox}
-                  className={classNames(projectcss.all, sty.freeBox)}
+                <p.PlasmicLink
+                  data-plasmic-name={"link"}
+                  data-plasmic-override={overrides.link}
+                  className={classNames(projectcss.all, projectcss.a, sty.link)}
+                  component={Link}
+                  href={(() => {
+                    try {
+                      return "/product-detail/" + $ctx.currentProduct.slug;
+                    } catch (e) {
+                      if (e instanceof TypeError) {
+                        return `/product-detail/${(() => {
+                          try {
+                            return undefined;
+                          } catch (e) {
+                            if (e instanceof TypeError) {
+                              return "lauren-by-ralph-lauren-sage-classic-fit-linen-suit-separates";
+                            }
+                            throw e;
+                          }
+                        })()}`;
+                      }
+                      throw e;
+                    }
+                  })()}
+                  platform={"nextjs"}
+                  target={undefined}
                 >
                   <ProductMedia
                     data-plasmic-name={"productMedia"}
@@ -260,118 +254,20 @@ function PlasmicHomepage__RenderFunc(props: {
                     field={"name" as const}
                   />
 
-                  {true ? (
-                    <ProductSlider
-                      data-plasmic-name={"productSlider"}
-                      data-plasmic-override={overrides.productSlider}
-                      className={classNames(
-                        "__wab_instance",
-                        sty.productSlider
-                      )}
-                      slideContainer={
-                        <ph.DataCtxReader>
-                          {$ctx => (
-                            <div
-                              className={classNames(
-                                projectcss.all,
-                                sty.freeBox__ohgdx
-                              )}
-                            >
-                              <ProductMedia
-                                className={classNames(
-                                  "__wab_instance",
-                                  sty.productMedia__ffFNj
-                                )}
-                              />
-                            </div>
-                          )}
-                        </ph.DataCtxReader>
-                      }
-                      slideSelected={0 as const}
-                      thumbsContainer={
-                        <ph.DataCtxReader>
-                          {$ctx => (
-                            <div
-                              className={classNames(
-                                projectcss.all,
-                                sty.freeBox__rgEe
-                              )}
-                            >
-                              <ProductMedia
-                                className={classNames(
-                                  "__wab_instance",
-                                  sty.productMedia__ggUf
-                                )}
-                              />
-                            </div>
-                          )}
-                        </ph.DataCtxReader>
-                      }
-                      thumbsVisible={4 as const}
-                    />
-                  ) : null}
-                  {true ? (
-                    <ProductQuantity
-                      data-plasmic-name={"productQuantity"}
-                      data-plasmic-override={overrides.productQuantity}
-                      className={classNames(
-                        "__wab_instance",
-                        sty.productQuantity
-                      )}
-                    >
-                      <input
-                        className={classNames(
-                          projectcss.all,
-                          projectcss.input,
-                          sty.textInput__zei6M
-                        )}
-                        onChange={e => {
-                          p.generateStateOnChangeProp($state, [
-                            "textbox",
-                            "value"
-                          ])(e.target.value);
-                        }}
-                        ref={ref => {
-                          $refs[undefined] = ref;
-                        }}
-                        size={1 as const}
-                        type={"text" as const}
-                        value={p.generateStateValueProp($state, [
-                          "textbox",
-                          "value"
-                        ])}
-                      />
-                    </ProductQuantity>
-                  ) : null}
                   <ProductPriceComponent
                     data-plasmic-name={"productPrice"}
                     data-plasmic-override={overrides.productPrice}
                     className={classNames("__wab_instance", sty.productPrice)}
                   />
-
-                  <AddToCartButton
-                    data-plasmic-name={"addToCartButton"}
-                    data-plasmic-override={overrides.addToCartButton}
-                    className={classNames(
-                      "__wab_instance",
-                      sty.addToCartButton
-                    )}
-                  >
-                    <button
-                      className={classNames(
-                        projectcss.all,
-                        projectcss.button,
-                        projectcss.__wab_text,
-                        sty.button__e40LW
-                      )}
-                    >
-                      {"Add To Cart"}
-                    </button>
-                  </AddToCartButton>
-                </div>
+                </p.PlasmicLink>
               )}
             </ph.DataCtxReader>
           </ProductCollection>
+          <PlasmicHead
+            data-plasmic-name={"head"}
+            data-plasmic-override={overrides.head}
+            className={classNames("__wab_instance", sty.head)}
+          />
         </div>
       </div>
     </React.Fragment>
@@ -385,42 +281,27 @@ const PlasmicDescendants = {
     "h1",
     "text",
     "productCollection",
-    "freeBox",
+    "link",
     "productMedia",
     "productTextField",
-    "productSlider",
-    "productQuantity",
     "productPrice",
-    "addToCartButton"
+    "head"
   ],
   section: ["section", "h1", "text"],
   h1: ["h1"],
   text: ["text"],
   productCollection: [
     "productCollection",
-    "freeBox",
+    "link",
     "productMedia",
     "productTextField",
-    "productSlider",
-    "productQuantity",
-    "productPrice",
-    "addToCartButton"
+    "productPrice"
   ],
-  freeBox: [
-    "freeBox",
-    "productMedia",
-    "productTextField",
-    "productSlider",
-    "productQuantity",
-    "productPrice",
-    "addToCartButton"
-  ],
+  link: ["link", "productMedia", "productTextField", "productPrice"],
   productMedia: ["productMedia"],
   productTextField: ["productTextField"],
-  productSlider: ["productSlider"],
-  productQuantity: ["productQuantity"],
   productPrice: ["productPrice"],
-  addToCartButton: ["addToCartButton"]
+  head: ["head"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -431,13 +312,11 @@ type NodeDefaultElementType = {
   h1: "h1";
   text: "div";
   productCollection: typeof ProductCollection;
-  freeBox: "div";
+  link: "a";
   productMedia: typeof ProductMedia;
   productTextField: typeof ProductTextField;
-  productSlider: typeof ProductSlider;
-  productQuantity: typeof ProductQuantity;
   productPrice: typeof ProductPriceComponent;
-  addToCartButton: typeof AddToCartButton;
+  head: typeof PlasmicHead;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -504,13 +383,11 @@ export const PlasmicHomepage = Object.assign(
     h1: makeNodeComponent("h1"),
     text: makeNodeComponent("text"),
     productCollection: makeNodeComponent("productCollection"),
-    freeBox: makeNodeComponent("freeBox"),
+    link: makeNodeComponent("link"),
     productMedia: makeNodeComponent("productMedia"),
     productTextField: makeNodeComponent("productTextField"),
-    productSlider: makeNodeComponent("productSlider"),
-    productQuantity: makeNodeComponent("productQuantity"),
     productPrice: makeNodeComponent("productPrice"),
-    addToCartButton: makeNodeComponent("addToCartButton"),
+    head: makeNodeComponent("head"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,
